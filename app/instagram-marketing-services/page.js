@@ -6,7 +6,7 @@ import Link from "next/link";
 import {
   IconHome,
   IconChevronRight,
-  IconInstagram,
+  IconBrandInstagram,
   IconCamera,
   IconRocket,
   IconChartBar,
@@ -16,7 +16,7 @@ import {
 export default function InstagramMarketingPage() {
   const services = [
     {
-      icon: IconInstagram,
+      icon: IconBrandInstagram,
       title: "Profile Optimization",
       desc: "Optimize your Instagram profile to attract and retain followers effectively.",
     },
