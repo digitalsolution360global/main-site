@@ -1,4 +1,6 @@
 'use client';
+export const dynamic = "force-dynamic";
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { UserButton, useUser } from '@clerk/nextjs';
@@ -6,6 +8,14 @@ import { useRouter } from 'next/navigation';
 
 export default function AdminBlogs() {
   const { user } = useUser();
+  if (!user) {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-gray-600">Loading...</p>
+    </div>
+  );
+}
+
   const router = useRouter();
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,13 +33,16 @@ export default function AdminBlogs() {
   });
 
   useEffect(() => {
-    // Redirect leads user
-    if (user?.username?.toLowerCase() === 'leads') {
-      router.push('/admin/leads');
-      return;
-    }
-    fetchBlogs();
-  }, [user]);
+  if (!user) return;
+
+  if (user.username?.toLowerCase() === 'leads') {
+    router.push('/admin/leads');
+    return;
+  }
+
+  fetchBlogs();
+}, [user]);
+
 
   const fetchBlogs = async () => {
     try {
